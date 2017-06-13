@@ -148,6 +148,6 @@ struct a6o_module module = {
 	.close_fun = python_close,
 	.info_fun = NULL,
 	.supported_mime_types = python_mime_types,
-	.name = "python",
+	.name = "modpython",
 	.size = sizeof(struct python_data),
 };
