@@ -99,16 +99,17 @@ static enum a6o_mod_status python_post_init(struct a6o_module *module)
 	return A6O_MOD_OK;
 }
 
-static int decode_retval(PyObject *pval)
+static int decode_retval(PyObject *pval, enum a6o_file_status *p_status, const char **pmod_report)
 {
-	if (!PyTuple_CheckExact(pval)
+	if (pval == NULL
+		|| !PyTuple_CheckExact(pval)
 		|| PyTuple_Size(pval) != 2
 		|| !PyLong_Check(PyTuple_GetItem(pval, 0))
 		|| !PyUnicode_Check(PyTuple_GetItem(pval, 1)))
 		return 1;
 
-	printf("returned value[0] %ld\n", PyLong_AsLong(PyTuple_GetItem(pval, 0)));
-	printf("returned value[1] %s\n", PyUnicode_AsUTF8(PyTuple_GetItem(pval, 1)));
+	*p_status = (enum a6o_file_status)PyLong_AsLong(PyTuple_GetItem(pval, 0));
+	*pmod_report = strdup(PyUnicode_AsUTF8(PyTuple_GetItem(pval, 1)));
 
 	return 0;
 }
@@ -120,8 +121,10 @@ static enum a6o_file_status python_scan(struct a6o_module *module, int fd, const
 	enum a6o_file_status ret_status;
 
 	pretval = py_obj_mth_invoke(py_data->pmth_scan, "iss", fd, path, mime_type);
+	if (decode_retval)
+		return A6O_FILE_EINVAL;
 
-	return A6O_FILE_CLEAN;
+	return ret_status;
 }
 
 static enum a6o_mod_status python_close(struct a6o_module *module)

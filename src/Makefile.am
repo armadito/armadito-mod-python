@@ -15,13 +15,5 @@ install-exec-hook:
 install-data-hook:
 	-rm -f "$(DESTDIR)$(modulesdir)"/modpython.la "$(DESTDIR)$(modulesdir)"/modpython.a
 
-xoEXTRA_DIST=modpython.sym
-
-noinst_PROGRAMS=test1
-
-test1_SOURCES= test1.c
-test1_CFLAGS= $(PYTHON_CPPFLAGS)
-test1_LDFLAGS= $(PYTHON_CPPFLAGS)œ
-test1_LDADD= $(PYTHON_LIBS)
-
+EXTRA_DIST=modpython.sym
 

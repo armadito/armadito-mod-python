@@ -15,7 +15,7 @@ setup(
     name = "Armadito antivirus Python generic module",
     version = "0.10.0",
     author = "François Déchelle",
-    author_email = "fdechelle@teclibzoo.com",
+    author_email = "fdechelle@teclib.com",
     description = ("POC Python module for the Armadito antivirus"),
     license = "GPLv3",
     keywords = "modudule",
