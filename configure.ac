@@ -35,7 +35,8 @@ if test "$HAVE_LIBARMADITO" = "no"; then
 fi
 
 # check for python
-AX_PYTHON_DEVEL(>= '3.5')
+#AX_PYTHON_DEVEL(>= '3.5')
+AX_PYTHON_DEVEL(>= '2.7')
 
 # Output files
 AC_CONFIG_FILES([

@@ -29,7 +29,11 @@ PyObject *py_module_import(const char *module_name)
 
 	Py_Initialize();
 
+#if PY_MAJOR_VERSION < 3
+	pname = PyUnicode_FromString(module_name);
+#else
 	pname = PyUnicode_DecodeFSDefault(module_name);
+#endif
 	if (pname == NULL) {
 		if (PyErr_Occurred())
 			PyErr_Print();
@@ -37,6 +41,11 @@ PyObject *py_module_import(const char *module_name)
         }
 
 	pmodule = PyImport_Import(pname);
+	if (pmodule == NULL) {
+		if (PyErr_Occurred())
+			PyErr_Print();
+        }
+
 	Py_DECREF(pname);
 
 	return pmodule;

@@ -102,6 +102,22 @@ static enum a6o_mod_status python_post_init(struct a6o_module *module)
 	return A6O_MOD_OK;
 }
 
+#if PY_MAJOR_VERSION < 3
+static int decode_retval(PyObject *pval, enum a6o_file_status *p_status, char **pmod_report)
+{
+	if (pval == NULL
+		|| !PyTuple_CheckExact(pval)
+		|| PyTuple_Size(pval) != 2
+		|| !PyInt_Check(PyTuple_GetItem(pval, 0))
+		|| !PyString_Check(PyTuple_GetItem(pval, 1)))
+		return 1;
+
+	*p_status = (enum a6o_file_status)PyInt_AsLong(PyTuple_GetItem(pval, 0));
+	*pmod_report = strdup(PyString_AsString(PyTuple_GetItem(pval, 1)));
+
+	return 0;
+}
+#else
 static int decode_retval(PyObject *pval, enum a6o_file_status *p_status, char **pmod_report)
 {
 	if (pval == NULL
@@ -116,6 +132,7 @@ static int decode_retval(PyObject *pval, enum a6o_file_status *p_status, char **
 
 	return 0;
 }
+#endif
 
 static enum a6o_file_status python_scan(struct a6o_module *module, int fd, const char *path, const char *mime_type, char **pmod_report)
 {
@@ -124,8 +141,10 @@ static enum a6o_file_status python_scan(struct a6o_module *module, int fd, const
 	enum a6o_file_status ret_status;
 
 	pretval = py_obj_mth_invoke(py_data->pmth_scan, "iss", fd, path, mime_type);
-	if (decode_retval(pretval, &ret_status, pmod_report))
+	if (decode_retval(pretval, &ret_status, pmod_report)) {
+		a6o_log(A6O_LOG_MODULE, A6O_LOG_LEVEL_WARNING, "Python method \"scan\" returned invalid value");
 		return A6O_FILE_EINVAL;
+	}
 
 	return ret_status;
 }

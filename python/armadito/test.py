@@ -1,3 +1,4 @@
+from __future__ import print_function
 from armadito import module as a6m
 
 class TestModule(a6m.Module):
