@@ -25,6 +25,7 @@ AX_PYTHON_DEVEL(>= '3.5')
 # Output files
 AC_CONFIG_FILES([
 Makefile
+conf/Makefile
 src/Makefile
 ])
 AC_OUTPUT

@@ -121,7 +121,7 @@ static enum a6o_file_status python_scan(struct a6o_module *module, int fd, const
 	enum a6o_file_status ret_status;
 
 	pretval = py_obj_mth_invoke(py_data->pmth_scan, "iss", fd, path, mime_type);
-	if (decode_retval)
+	if (decode_retval(pretval, &ret_status, pmod_report))
 		return A6O_FILE_EINVAL;
 
 	return ret_status;

@@ -18,8 +18,8 @@ setup(
     author_email = "fdechelle@teclib.com",
     description = ("POC Python module for the Armadito antivirus"),
     license = "GPLv3",
-    keywords = "modudule",
-    url = "https://nowhe.re",
+    keywords = "antivirus",
+    url = "https://github.com/armadito/armadito-mod-python",
     long_description = "POC Python module for the Armadito antivirus",
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -28,11 +28,3 @@ setup(
     ],
     packages = ['armadito'],
 )
-
-#
-#
-# reminder: for user local installation
-# ./setup.py install --user
-# ./setup.py install_data --install-dir=/home/fdechelle/.local
-#
-#
