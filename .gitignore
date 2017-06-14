@@ -1,5 +1,8 @@
 # http://www.gnu.org/software/automake
 
+*~
+python/peepdf
+
 Makefile.in
 /ar-lib
 /mdate-sh

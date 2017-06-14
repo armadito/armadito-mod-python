@@ -1,2 +1,2 @@
-SUBDIRS=src conf
+SUBDIRS=c conf
 

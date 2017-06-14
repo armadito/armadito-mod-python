@@ -1,14 +1,10 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 # to combine autotools and setuptools, see:
 # https://blog.kevin-brown.com/programming/2014/09/24/combining-autotools-and-setuptools.html
 # Thank you!
 
-import os
-import glob
-import shutil
-import stat
 from setuptools import setup
 
 setup(
@@ -26,5 +22,6 @@ setup(
         "Topic :: Utilities",
         "License :: OSI Approved :: GPLv3 License",
     ],
-    packages = ['armadito'],
+    packages = ['armadito', 'aespython', 'jsbeautifier', ''],
+    package_dir = {'armadito':'python/armadito', 'aespython':'python/peepdf/aespython', 'jsbeautifier':'python/peepdf/jsbeautifier', '':'python/peepdf'}
 )
