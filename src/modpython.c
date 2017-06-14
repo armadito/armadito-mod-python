@@ -70,6 +70,9 @@ static enum a6o_mod_status python_post_init(struct a6o_module *module)
 	struct python_data *py_data = (struct python_data *)module->data;
 	PyObject *pmodule, *pclass, *pobj, *pmth, *pval;
 
+	if (py_data->module_name == NULL || py_data->class_name == NULL)
+		return A6O_MOD_INIT_ERROR;
+
 	pmodule = py_module_import(py_data->module_name);
 	if (pmodule == NULL) {
 		a6o_log(A6O_LOG_MODULE, A6O_LOG_LEVEL_WARNING, "cannot import Python module %s", py_data->module_name);
@@ -99,7 +102,7 @@ static enum a6o_mod_status python_post_init(struct a6o_module *module)
 	return A6O_MOD_OK;
 }
 
-static int decode_retval(PyObject *pval, enum a6o_file_status *p_status, const char **pmod_report)
+static int decode_retval(PyObject *pval, enum a6o_file_status *p_status, char **pmod_report)
 {
 	if (pval == NULL
 		|| !PyTuple_CheckExact(pval)

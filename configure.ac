@@ -1,10 +1,25 @@
 AC_INIT(armadito-mod-python, 0.0.1, fdechelle@teclib.com)
 AM_INIT_AUTOMAKE([foreign])
 
+# collect arguments
+# debug
+AC_ARG_ENABLE([debug],
+	AS_HELP_STRING([--enable-debug],[enable debugging @<:@default is yes@:>@]),
+	,
+	enable_debug="yes")
+
 # check for needed programs
 AC_PROG_CC([gcc])
 AC_PROG_LIBTOOL
 
+# check for debug
+AC_MSG_CHECKING(for debug)
+AC_MSG_RESULT($enable_debug)
+AM_CONDITIONAL([DEBUG], [test "$enable_debug" = "yes"])
+if test "$enable_debug" = "yes"; then
+   AC_DEFINE(DEBUG,1,[Define DEBUG to enable debug messages])
+   CFLAGS="${CFLAGS} -g"
+fi
 PKG_PROG_PKG_CONFIG
 
 # check for libarmadito
