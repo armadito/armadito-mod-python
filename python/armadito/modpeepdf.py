@@ -1,11 +1,14 @@
+from __future__ import print_function
 from armadito import module as a6m
 from PDFCore import PDFParser, vulnsDict
 
 class PeePDFModule(a6m.Module):
     def __init__(self):
+        print('PeePDFModule.__init__()')
         pass
 
     def scan(self, fd, path, mime_type):
+        print('PeePDFModule.scan(', fd, path, mime_type, ')')
         pdfParser = PDFParser()
         ret, pdf = pdfParser.parse(path, True, True, True)
         statsDict = pdf.getStats()
@@ -38,4 +41,4 @@ class PeePDFModule(a6m.Module):
                             stats += ' ' + vulnName + ' (' + ' '.join(vulnCVEList) +')'
                         else:
                             stats += ' ' + element
-            return (status.value, stats)
+        return (status.value, stats)
